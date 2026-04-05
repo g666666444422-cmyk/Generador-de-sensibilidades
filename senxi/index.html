@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador Sensi FF PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="Genera la mejor sensibilidad y DPI para Free Fire, personalizado para tu móvil y estilo de juego.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,700|Montserrat:800&display=swap">
+  <style>
+    html, body {height:100%;margin:0;padding:0;}
+    body {
+      min-height:100vh; min-width:100vw;
+      background: linear-gradient(127deg, #2f2866 0%, #5efcff 100%);
+      background-size: 170% 170%;
+      animation: backMove 14s ease-in-out infinite alternate;
+      font-family: 'Inter', 'Montserrat', Arial, sans-serif;
+      overflow-x: hidden;
+      display: flex; flex-direction:column; align-items: center; justify-content: center;
+    }
+    @keyframes backMove {0%{background-position:0% 62%;}50%{background-position:100% 42%;}100%{background-position:0% 62%;}}
+    .particles {position:fixed; inset:0; z-index:0; pointer-events:none; mix-blend-mode: lighten;}
+    .particles span { position: absolute; border-radius:50%; opacity:.10; filter: blur(9px); pointer-events:none; animation: parFloat 8s linear infinite alternate;}
+    .particles span:nth-child(1){width:36px;height:36px;left:8vw;top:6vh;background:#b0fcff;}
+    .particles span:nth-child(2){width:22px;height:22px;left:74vw;top:18vh;background:#fbd0fe;}
+    .particles span:nth-child(3){width:22px;height:22px;left:12vw;top:81vh;background:#def9ee;}
+    .particles span:nth-child(4){width:13px;height:13px;left:70vw;top:52vh;background:#fde5ee;}
+    @keyframes parFloat {0%{transform:scale(.80) translateY(0);}100%{transform:scale(1.14) translateY(-14px);}}
+    /* ---- INICIO CENTRADO + DESVANECE ---- */
+    .centerer {
+      height: 100vh; width: 100vw; position: fixed;
+      left:0; top:0; z-index: 2; inset: 0;
+      display: flex; align-items: center; justify-content: center; background: transparent;
+      pointer-events: all; transition: opacity .65s, filter .45s, transform .7s;
+    }
+    .centerer.hide {
+      opacity:0; pointer-events:none; filter: blur(12px);
+      transform:translateY(80px) scale(.96);
+      transition: opacity .68s cubic-bezier(.51,1.43,.42,1.09), filter .62s, transform .67s cubic-bezier(.51,1.44,.42,1.02);
+    }
+    .card-inicio {
+      background: rgba(247,255,255,0.97);
+      border-radius:28px;box-shadow:0 8px 48px #06fdfc2c,0 0px 8px #7d4afadb;
+      padding: 30px 6vw 26px 6vw; min-width:0;width:96vw;max-width:365px;text-align:center;
+      display:flex;flex-direction:column;align-items:center;
+      animation: glassIn .8s cubic-bezier(.45,1.57,.31,1) both;animation-delay: .03s;
+      backdrop-filter: blur(8px) saturate(1.08);
+      font-size: 1.04em;margin:0 auto;
+      transition: opacity .35s, filter .31s, transform .47s;
+    }
+    @keyframes glassIn {from{opacity:0;filter:blur(12px) brightness(1.07);}to{opacity:1;filter:none;}}
+    .logo-mini{width:44px;height:44px;border-radius:13px;background:linear-gradient(41deg,#36e4fa 23%,#823bf7 90%);box-shadow:0 2px 10px #a4fff765;display:flex;align-items:center;justify-content:center;margin-bottom:13px;}
+    .logo-mini img{width:32px;height:32px;display:block;}
+    .username-tt{font-family:'Montserrat',sans-serif;font-weight:800;color:#110c39;font-size:1.13em;letter-spacing:.04em;margin-bottom:7px;}
+    .sub-text-inicio{color:#195bb8;font-size:1.13em;margin-bottom:20px;line-height:1.41;}
+    .redes-container{display:flex;flex-direction:column;gap:13px;margin-bottom:17px;width:100%;align-items:center;}
+    .red-badge{
+      background:linear-gradient(92deg,#fff 70%,#c9faff 100%);
+      border-radius:9px;box-shadow:0 1px 7px #c2f8ff18;
+      display:flex;align-items:center;justify-content:center;
+      padding:9px 22px;gap:11px;cursor:pointer;border:1.1px solid #bdfaff;
+      font-size:1.1em;color:#134177;user-select:none;
+      transition:box-shadow .17s,background .12s,transform .11s,filter .12s;}
+    .red-badge:hover{box-shadow:0 1px 14px #49e0fa0c;background:#e8fcfc;filter:brightness(1.03);}
+    .red-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;}
+    .red-badge .red-user{font-size:.99em;color:#1ebdb4;margin-left:7px;}
+    .red-badge .extra-txt{color:#ad30c2;font-size:1.01em;font-weight:700;margin-left:10px;}
+    .btn-iniciar{
+      width:100vw;max-width:370px; margin:20px 0 0 0;padding:1.14em 0;font-size:1.15em;font-weight:900; border:none;border-radius:17px;background:linear-gradient(93deg,#3973e7 24%,#45faf5 98%);color:#fff;letter-spacing:.13em;cursor:pointer;
+      box-shadow: 0 2px 13px #13bdf35c, 0 0px 6px #19eafc10; transition:background .17s, box-shadow .14s,transform .10s;}
+    .btn-iniciar:active{background:linear-gradient(86deg,#23f1f3 56%,#223ad0 99%);transform:scale(.97);}
+    .btn-iniciar:hover{background:linear-gradient(86deg,#1beffc 36%,#223ad0 97%);}
+    /* MAIN FLEX (super fade up) */
+    .main-flex{
+      width:100vw; max-width:99vw;margin:0 auto;
+      display:flex;flex-direction:column;align-items:center;gap:6vw;padding:0;box-sizing:border-box;
+      opacity:0; pointer-events:none;
+      transform: translateY(95px) scale(.98);
+      transition:opacity .69s cubic-bezier(.49,1.1,.31,.99),transform .59s cubic-bezier(.49,1.1,.31,.99);
+      filter:blur(12px);
+    }
+    .main-flex.visible{
+      opacity:1; pointer-events:all; filter:none;
+      transform: translateY(0) scale(1);
+      animation: fadeOmUp .83s cubic-bezier(.48,1,.35,1) both;
+    }
+    @keyframes fadeOmUp {from { opacity:0; filter:blur(10px); transform:translateY(80px) scale(.98);}
+      to{ opacity:1; filter:none; transform:translateY(0) scale(1);}}
+    .panel-explica, .panel-gen{width:95vw; max-width:442px; min-width:0;
+      margin: 0 auto 18px auto; border-radius: 14px;
+      box-shadow:0 3px 16px #99e4ff16, 0 0px 2px #bdfcff12;
+      backdrop-filter: blur(7px) saturate(1.03);
+      border: 1.1px solid #b8faff;
+      padding: 20px 5vw 22px 6vw; font-size: 1.13em;
+      overflow: hidden;position: relative;background: rgba(255,255,255,0.98);}
+    .panel-explica:before{
+      content:'';pointer-events:none;z-index:1;position:absolute;top:-18px;left:31%;width:58px;height:36px;background:radial-gradient(circle,#79fdff81 0%,rgba(255,255,255,0.07) 100%);filter: blur(7px);opacity:.13;transform:rotate(-13deg);animation: panGlow 2.8s infinite alternate;
+    }
+    .panel-gen{margin-bottom:26px;}
+    .gen-title{font-family:'Montserrat',sans-serif;font-size:1.13em;font-weight:900;color:#1e176c;margin-bottom:13px;text-align:center;}
+    .gen-desc{font-size:1.07em;color:#159eaa;font-weight:600;margin-bottom:13px;text-align:center;}
+    .info-generador-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.11em;color:#12bfa6;margin-bottom:.33em;letter-spacing:.04em;text-shadow:0 1px 3px #5cc6f8b3;text-align:center;}
+    .gen-recom{font-size:1em;color:#169fc5;background:rgba(255,255,255,0.98);line-height:1.67;font-family:'Inter',sans-serif;padding:.49em .13em .42em .14em;border-radius:9px; box-shadow: 0 1px 8px #c4edf635;text-align:left;border-left:4px solid #17eabc;margin-bottom:6px;margin-top:0;max-width:400px;}
+    .param-explicacion{background:rgba(255,255,255,.92);border-radius:7px;box-shadow:0 2px 6px #abedf520;padding:.27em .11em .36em .31em;color:#0a5594;font-size:.98em;text-align:left;border-left:3px solid #32ccff;line-height:1.65;}
+    .param-explicacion ul{margin:.07em 0 0 1.06em;font-size:1em;}
+    .param-explicacion code{background:#eaf8ff;border-radius:2px;padding:1px 3px;color:#1877ad;font-weight:700;}
+    label{color:#2262d2;font-weight:700;font-size:1.04em;margin-bottom:0.12em;letter-spacing:.01em;margin-top:0.34em;display:block;text-align:left;}
+    select, .panel-gen button{width:100%;padding:1.05em .19em;border-radius:10px;border:1.3px solid #e7eef8;font-size:1.14em;margin-bottom:14px;outline:none;font-family:inherit;background:#f4fdff;color:#223561;transition:box-shadow .13s, border .10s, background .10s;box-shadow:0 1px 4px #a8def79e;}
+    select:focus{border:1.6px solid #19bfec;background:#e4fdff;}
+    .panel-gen button{margin-top:8px;margin-bottom:13px;background: linear-gradient(93deg,#24c9f7 36%,#1ff6ce 95%);color:#20435c;font-weight:900;font-size:1.08em;font-family:'Montserrat',sans-serif;border:none;border-radius:11px;cursor:pointer; box-shadow:0 5px 11px #13eca62a,0 1.5px 6px #22ddcc1c;transition: background .13s, color .10s, box-shadow .10s, transform .13s;}
+    .panel-gen button:active {transform:scale(.97);}
+    .panel-gen button:hover {background:linear-gradient(-92deg,#19e9cc 44%,#19a8ec 97%); color:#0acce6;box-shadow:0 7px 12px #31f1e680;}
+    #copy-btn.copied {background:#22e8f7 !important;color:#143564 !important;font-weight:800;}
+    .results-pro{background: #eafcfffc;border-radius:11px;margin-top:.7em;margin-bottom:1em;box-shadow: 0 1px 7px #31e8fb14;padding:.48em .14em .48em .17em;display: grid; gap:.53em;border:1px solid #1bdfc587;animation: fadeInUsrGen .28s cubic-bezier(.22,.71,.33,.89);opacity:0;transform:translateY(12px) scale(.99);transition:opacity .15s, transform .17s;}
+    .results-pro.shown{opacity:1; transform:translateY(0) scale(1);}
+    @keyframes fadeInUsrGen {from{opacity:0;transform:scale(.995) translateY(21px);}to{opacity:1;transform:scale(1) translateY(0);} }
+    .doublerow-pro{display:grid; grid-template-columns: 1fr 1fr; gap:.13em;margin-bottom:0.01em;}
+    .result-pro{font-size:1.07em;font-family:'Inter',sans-serif;font-weight:900;border-radius:7px;background:#e3fbff;color:#21aaa9;border-left:3px solid #14daa9;padding:10px 12px; box-shadow:0 1px 4px #00ffd627;display:flex;align-items:center;gap:0.09em;transition:background .11s, box-shadow .09s, color .11s, transform .09s;}
+    .result-pro:hover{box-shadow:0 4px 7px #09e0a641,0 1px 6px #37b1ff42;background:#e7f8ff;color:#13b0b4;z-index:2;transform:scale(1.01) translateY(-0.9px);}
+    .icon{width:1.14em;height:1.14em;margin-right:.11em;display:inline-block;vertical-align:middle;background:#e9fdff;border-radius:50%;padding:2.1px;box-shadow:0 1px 3px #cfffdb15;}
+    #volver-inicio{width:100%;margin:2px 0 0 0;padding:.79em 0;background:linear-gradient(90deg,#d3fbff 10%,#aeebff 90%);border:none;border-radius:11px;color:#0e77b1;font-size:1.14em;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:.07em;box-shadow:0 2px 7px #50b6e504;transition:background .08s, color .08s;}
+    #volver-inicio:active{opacity:.8;}
+    #volver-inicio:hover{background:#e4fdff;color:#1792ae;}
+    @media (min-width:700px) {
+      .main-flex{flex-direction: row; align-items: flex-start; gap:4vw;padding: 28px 0 60px 0;}
+      .panel-explica, .panel-gen{width: 94vw; max-width:296px; font-size: 1.05em;margin-bottom: 0; min-width:0;}
+      .panel-gen{margin-bottom:0;}
+      .gen-title, .gen-desc, .info-generador-title{font-size:1.11em;}
+      .card-inicio{max-width:355px;padding:27px 38px 24px 38px;}
+    }
+    @media (max-width:480px) {
+      .panel-explica, .panel-gen{font-size:1.06em;padding:5vw 4vw 7vw 5vw;}
+      .doublerow-pro{font-size:.99em;}
+      select, .panel-gen button{font-size:1.05em;}
+    }
+  </style>
+</head>
+<body>
+<div class="particles"><span></span><span></span><span></span><span></span></div>
+<div class="centerer visible" id="centerer">
+  <div class="card-inicio" id="card-inicio">
+    <div class="logo-mini"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="Logo"></div>
+    <div class="username-tt">@yandercito_</div>
+    <div class="sub-text-inicio">¡Bienvenido!<br>Sígueme y genera tu mejor sensibilidad para Free Fire:</div>
+    <div class="redes-container">
+      <div class="red-badge" onclick="window.open('https://www.tiktok.com/@yandercito_','_blank')">
+        <div class="red-icon">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="18" height="18">
+        </div>
+        TikTok
+        <span class="red-user">@yandercito_</span>
+        <span class="extra-txt">→</span>
+      </div>
+      <div class="red-badge" onclick="window.open('https://www.instagram.com/lil_yanderr','_blank')">
+        <div class="red-icon">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="IG" width="17" height="17">
+        </div>
+        Instagram
+        <span class="red-user">@lil_yanderr</span>
+        <span class="extra-txt">→</span>
+      </div>
+    </div>
+    <button class="btn-iniciar" id="iniciarBtn">INICIAR</button>
+  </div>
+</div>
+<div class="main-flex" id="main-flex" style="display:none;">
+  <div class="panel-explica">
+    <div class="info-generador-title">¿Qué es este Generador?</div>
+    <div class="gen-recom">
+      Optimiza tu sensibilidad y DPI. <b>Elige tu estilo y genera tus mejores valores.</b><br><span style="color:#fe2c55;font-weight:700;">Actualiza y prueba hasta hallar tu combinación ideal.</span>
+    </div>
+    <div class="param-explicacion">
+      <ul>
+      <li><b><code>DPI</code></b>: Movimientos más rápidos, pero difíciles de controlar si es muy alto.</li>
+      <li><b><code>Botón de disparo</code></b>: Tamaño del botón; más grande te hace disparar más rápido pero puede tapar la pantalla.</li>
+      <li><b>General, Punto Rojo, x2, x4, AWM, Vista libre:</b> Sube General si eres rusher, Punto Rojo para headshot.</li>
+      </ul>
+      <b style="display:block;margin-top:.6em;">¿No te gusta el primer resultado?</b>
+      Haz clic varias veces en <b>"Generar Sensibilidad"</b>.
+    </div>
+  </div>
+  <div class="panel-gen" id="panel-gen">
+    <div class="gen-title">Generador de Sensibilidad FF</div>
+    <div class="gen-desc">
+      Elige tu dispositivo y tu estilo, presiona "Generar Sensibilidad" y listo.<br>
+      Recibirás valores de DPI, botón, general y cada mira.
+    </div>
+    <label>¿En qué dispositivo juegas?</label>
+    <select id="device-type">
+      <option value="gama-baja">Gama Baja (2-3GB RAM)</option>
+      <option value="gama-media">Gama Media (4-6GB RAM)</option>
+      <option value="gama-alta">Gama Premium (iPhone / Galaxy S / Xiaomi Pro)</option>
+    </select>
+    <label>Estilo de juego:</label>
+    <select id="play-style">
+      <option value="preciso">Preciso en Mira</option>
+      <option value="rusher">Rusher (Levantado de mira rápido)</option>
+    </select>
+    <button id="generar-btn">Generar Sensibilidad</button>
+    <div class="results-pro" id="output-panel" style="display:none;">
+      <div class="doublerow-pro">
+        <div id="result-dpi" class="result-pro">
+          <img src="https://img.icons8.com/nolan/32/cell-phone.png" class="icon" alt="DPI">DPI: --
+        </div>
+        <div id="result-disparo" class="result-pro">
+          <img src="https://img.icons8.com/stickers/32/pistol.png" class="icon" alt="Disparo">Botón de disparo: --
+        </div>
+      </div>
+      <div class="doublerow-pro">
+        <div id="result-general" class="result-pro">
+          <img src="https://img.icons8.com/fluency/28/settings.png" class="icon" alt="Gen">General: --
+        </div>
+        <div id="result-reddot" class="result-pro">
+          <img src="https://img.icons8.com/color/28/red-dot.png" class="icon" alt="Red Dot">Punto Rojo: --
+        </div>
+      </div>
+      <div class="doublerow-pro">
+        <div id="result-x2" class="result-pro">
+          <img src="https://img.icons8.com/color/28/zoom-in--v1.png" class="icon" alt="x2">Mira x2: --
+        </div>
+        <div id="result-x4" class="result-pro">
+          <img src="https://img.icons8.com/color/28/gnome-globe.png" class="icon" alt="x4">Mira x4: --
+        </div>
+      </div>
+      <div class="doublerow-pro">
+        <div id="result-awm" class="result-pro">
+          <img src="https://img.icons8.com/color/28/sniper-rifle.png" class="icon" alt="AWM">Mira AWM: --
+        </div>
+        <div id="result-free" class="result-pro">
+          <img src="https://img.icons8.com/color/28/eye.png" class="icon" alt="Vista libre">Vista libre: --
+        </div>
+      </div>
+    </div>
+    <button id="copy-btn" disabled>Copiar Resultados</button>
+    <button id="volver-inicio" style="margin-top:10px;">Volver al inicio</button>
+  </div>
+</div>
+<script>
+const centerer = document.getElementById('centerer');
+const mainFlex = document.getElementById('main-flex');
+document.getElementById('iniciarBtn').onclick = function() {
+  centerer.classList.add('hide');
+  setTimeout(() => {
+    centerer.style.display='none';
+    mainFlex.style.display='flex';
+    setTimeout(()=>{ mainFlex.classList.add('visible'); }, 60);
+  }, 700);
+};
+document.getElementById('generar-btn').addEventListener('click', generarSensibilidad);
+document.getElementById('copy-btn').addEventListener('click', copiarResultados);
+document.getElementById('volver-inicio').addEventListener('click', function() { window.location.reload(); });
+document.getElementById('output-panel').style.display = 'none';
+document.getElementById('copy-btn').disabled = true;
+function generarSensibilidad() {
+  function aleatorio0a200() { return Math.floor(Math.random() * 201);}
+  function aleatorioDPI() { return Math.floor(Math.random() * (800 - 200 + 1)) + 200;}
+  function aleatorioDisparo() { return Math.floor(Math.random() * 100) + 1;}
+  const finalDPI = aleatorioDPI();
+  const finalDisparo = aleatorioDisparo();
+  const finalGen  = aleatorio0a200();
+  const finalRed  = aleatorio0a200();
+  const finalX2   = aleatorio0a200();
+  const finalX4   = aleatorio0a200();
+  const finalAWM  = aleatorio0a200();
+  const finalFree = aleatorio0a200();
+  document.getElementById('result-dpi').innerHTML     = `<img src="https://img.icons8.com/nolan/32/cell-phone.png" class="icon" alt="DPI">DPI: ${finalDPI}`;
+  document.getElementById('result-disparo').innerHTML = `<img src="https://img.icons8.com/stickers/32/pistol.png" class="icon" alt="Disparo">Botón de disparo: ${finalDisparo}`;
+  document.getElementById('result-general').innerHTML = `<img src="https://img.icons8.com/fluency/28/settings.png" class="icon" alt="Gen">General: ${finalGen}%`;
+  document.getElementById('result-reddot').innerHTML  = `<img src="https://img.icons8.com/color/28/red-dot.png" class="icon" alt="Red Dot">Punto Rojo: ${finalRed}%`;
+  document.getElementById('result-x2').innerHTML      = `<img src="https://img.icons8.com/color/28/zoom-in--v1.png" class="icon" alt="x2">Mira x2: ${finalX2}%`;
+  document.getElementById('result-x4').innerHTML      = `<img src="https://img.icons8.com/color/28/gnome-globe.png" class="icon" alt="x4">Mira x4: ${finalX4}%`;
+  document.getElementById('result-awm').innerHTML     = `<img src="https://img.icons8.com/color/28/sniper-rifle.png" class="icon" alt="AWM">Mira AWM: ${finalAWM}%`;
+  document.getElementById('result-free').innerHTML    = `<img src="https://img.icons8.com/color/28/eye.png" class="icon" alt="Vista libre">Vista libre: ${finalFree}%`;
+  const panel = document.getElementById('output-panel');
+  panel.style.display = 'block';
+  setTimeout(()=>{ panel.classList.add('shown'); }, 10);
+  document.getElementById('copy-btn').disabled = false;
+}
+function copiarResultados() {
+  function soloTexto(id) {return document.getElementById(id).innerText;}
+  const dpi = soloTexto('result-dpi');
+  const disparo = soloTexto('result-disparo');
+  const general = soloTexto('result-general');
+  const redDot = soloTexto('result-reddot');
+  const x2 = soloTexto('result-x2');
+  const x4 = soloTexto('result-x4');
+  const awm = soloTexto('result-awm');
+  const free = soloTexto('result-free');
+  const dispositivo = document.getElementById('device-type');
+  const dispositivoTxt = dispositivo.options[dispositivo.selectedIndex].text;
+  const estiloJ = document.getElementById('play-style');
+  const estiloTxt = estiloJ.options[estiloJ.selectedIndex].text;
+  const texto =
+`--- Configuración de Sensibilidad FF ---
+Dispositivo: ${dispositivoTxt}
+Estilo de juego: ${estiloTxt}
+${dpi}
+${disparo}
+${general}
+${redDot}
+${x2}
+${x4}
+${awm}
+${free}`;
+  navigator.clipboard.writeText(texto).then(() => {
+    const copyBtn = document.getElementById('copy-btn');
+    copyBtn.classList.add('copied');
+    copyBtn.innerText = '¡COPIADO!';
+    setTimeout(() => {
+      copyBtn.classList.remove('copied');
+      copyBtn.innerText = 'Copiar Resultados';
+    }, 1200);
+  });
+}
+</script>
+</body>
+</html>
